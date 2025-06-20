@@ -1,21 +1,26 @@
 {
-  "name": "mcp-utils",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "crypto-js": "^4.2.0",
-    "mongodb": "^6.16.0"
-  },
-  "devDependencies": {
-    "@modelcontextprotocol/sdk": "^1.13.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
-  }
+    "name": "mcp-utils",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "exports": {
+        "./utils": "./dist/utils/index.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "prepare": "npm run build"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "crypto-js": "^4.2.0",
+        "mongodb": "^6.16.0"
+    },
+    "devDependencies": {
+        "@modelcontextprotocol/sdk": "^1.13.0",
+        "ts-node": "^10.9.2",
+        "tsc": "^2.0.4",
+        "typescript": "^5.8.3"
+    }
 }
