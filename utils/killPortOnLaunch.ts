@@ -1,14 +1,14 @@
-import {printInConsole} from "./printInConsole";
-import {promisify} from "util";
-import {exec} from "child_process";
-import {sendError} from "./sendError";
-import {transport} from "../server";
+import { printInConsole } from "./printInConsole";
+import { promisify } from "util";
+import { exec } from "child_process";
+import { sendError } from "./sendError";
+import { transport } from "../src/server";
 
 const sleep = async (ms: number) => {
-    await printInConsole(transport, 'Sleep start');
-    await new Promise(resolve => setTimeout(resolve, ms));
-    await printInConsole(transport, 'Sleep end');
-}
+    await printInConsole(transport, "Sleep start");
+    await new Promise((resolve) => setTimeout(resolve, ms));
+    await printInConsole(transport, "Sleep end");
+};
 
 async function killPortOnLaunch(PORT: number) {
     await printInConsole(transport, `Attempting to kill port ${PORT}`);
@@ -17,15 +17,15 @@ async function killPortOnLaunch(PORT: number) {
 
     try {
         let pids: string[] = [];
-        if (platform === 'win32') {
+        if (platform === "win32") {
             try {
-                const {stdout} = await execAsync(`netstat -ano | findstr :${PORT}`);
-                const lines = stdout.trim().split('\n');
+                const { stdout } = await execAsync(`netstat -ano | findstr :${PORT}`);
+                const lines = stdout.trim().split("\n");
                 const pidSet = new Set<string>();
                 for (const line of lines) {
                     const parts = line.trim().split(/\s+/);
                     const pid = parts[parts.length - 1];
-                    if (pid && pid !== '0' && !isNaN(parseInt(pid))) {
+                    if (pid && pid !== "0" && !isNaN(parseInt(pid))) {
                         pidSet.add(pid);
                     }
                 }
@@ -35,17 +35,17 @@ async function killPortOnLaunch(PORT: number) {
                 pids = [];
             }
         } else {
-            const {stdout} = await execAsync(`lsof -ti:${PORT} || true`);
-            pids = stdout.trim().split('\n').filter(Boolean);
+            const { stdout } = await execAsync(`lsof -ti:${PORT} || true`);
+            pids = stdout.trim().split("\n").filter(Boolean);
         }
-        await printInConsole(transport, `Found PIDs: ${pids.join(', ')}, #of pids: ${pids.length}`);
+        await printInConsole(transport, `Found PIDs: ${pids.join(", ")}, #of pids: ${pids.length}`);
 
         if (!pids.length || pids.length === 0) {
             await printInConsole(transport, `No process using port ${PORT}`);
         } else {
             for (const pid of pids) {
-                if (pid === '0') continue; // Skip system process
-                const killCmd = platform === 'win32' ? `taskkill /F /PID ${pid}` : `kill -9 ${pid}`;
+                if (pid === "0") continue; // Skip system process
+                const killCmd = platform === "win32" ? `taskkill /F /PID ${pid}` : `kill -9 ${pid}`;
                 await execAsync(killCmd);
                 await printInConsole(transport, `Killed PID ${pid}`);
             }
@@ -57,7 +57,13 @@ async function killPortOnLaunch(PORT: number) {
         if (error.code === 123) {
             await printInConsole(transport, `Port ${PORT} is not in use`);
         } else {
-            sendError(transport, error instanceof Error ? error : new Error(`Error killing port ${PORT}: ${error.message}`), 'port-killing');
+            sendError(
+                transport,
+                error instanceof Error
+                    ? error
+                    : new Error(`Error killing port ${PORT}: ${error.message}`),
+                "port-killing"
+            );
         }
     }
 }
@@ -69,10 +75,14 @@ async function freezePortOnQuit() {
             // “signal 0” just tests existence
             process.kill(claudePpid, 0);
         } catch {
-            sendError(transport, Error('Parent (Claude) no longer exists → exiting'), 'transport-close');
+            sendError(
+                transport,
+                Error("Parent (Claude) no longer exists → exiting"),
+                "transport-close"
+            );
             process.exit(0);
         }
     }, 2000);
 }
 
-export {killPortOnLaunch, freezePortOnQuit}
+export { killPortOnLaunch, freezePortOnQuit };

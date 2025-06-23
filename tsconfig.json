@@ -4,7 +4,7 @@
         "module": "CommonJS",
         "moduleResolution": "node",
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": ".",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
@@ -12,6 +12,6 @@
         "declarationMap": true,
         "sourceMap": true
     },
-    "include": ["src/**/*", "src/utils/**/*", "declarations.d.ts"],
+    "include": ["src/**/*", "utils/**/*", "declarations.d.ts"],
     "exclude": ["node_modules"]
 }
