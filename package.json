@@ -15,12 +15,11 @@
     "license": "ISC",
     "dependencies": {
         "crypto-js": "^4.2.0",
-        "mongodb": "^6.16.0",
-        "typescript": "^5.8.3"
+        "mongodb": "^6.16.0"
     },
     "devDependencies": {
         "@modelcontextprotocol/sdk": "^1.13.0",
         "ts-node": "^10.9.2",
-        "tsc": "^2.0.4"
+        "typescript": "^5.8.3"
     }
 }
