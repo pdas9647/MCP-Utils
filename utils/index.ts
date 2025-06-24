@@ -1,4 +1,5 @@
 export * from "./db";
+export * from "./directory";
 export * from "./encryption";
 export * from "./killPortOnLaunch";
 export * from "./printInConsole";
