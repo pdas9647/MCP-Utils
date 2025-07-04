@@ -89,8 +89,8 @@ export function setEntry(projectName: string) {
         };
     }
 
-    // CommonJS supports __dirname directly
-    const projectPath = path.resolve(__dirname, "../mcp-servers", projectName);
+    // Use the calling project's root directory
+    const projectPath = path.resolve(process.cwd(), projectName);
 
     if (platform() === "darwin") {
         return {
