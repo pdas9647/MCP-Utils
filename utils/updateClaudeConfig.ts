@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import process from "process";
-import { join } from "path";
+import path, { join } from "path";
 import os, { platform } from "os";
 import { printInConsole } from "./printInConsole";
 import { sendError } from "./sendError";
@@ -77,7 +77,9 @@ export async function addOrUpdateMCPServer(
 }
 
 export function setEntry(projectName: string) {
-    if ((process as any).pkg) {
+    const isPkg = (process as any).pkg;
+
+    if (isPkg) {
         return {
             entry: {
                 command: process.execPath,
@@ -85,28 +87,26 @@ export function setEntry(projectName: string) {
                 cwd: process.cwd(),
             },
         };
+    }
+
+    // CommonJS supports __dirname directly
+    const projectPath = path.resolve(__dirname, "../mcp-servers", projectName);
+
+    if (platform() === "darwin") {
+        return {
+            entry: {
+                command: "bash",
+                args: ["-c", `cd "${projectPath}" && npx ts-node src/server.ts`],
+            },
+        };
+    } else if (platform() === "win32") {
+        return {
+            entry: {
+                command: "cmd",
+                args: ["/c", `cd /d "${projectPath}" && npx ts-node src/server.ts`],
+            },
+        };
     } else {
-        // development
-        if (platform() === "darwin") {
-            return {
-                entry: {
-                    command: "bash",
-                    args: [
-                        "-c",
-                        `cd /Users/padmanabhadas/Chayan_Personal/NodeJs/mcp-servers/${projectName} && npx ts-node src/server.ts`,
-                    ],
-                },
-            };
-        } else if (platform() === "win32") {
-            return {
-                entry: {
-                    command: "cmd",
-                    args: [
-                        "/c",
-                        `cd /d E:\\NodeJsProjects\\all-node-js-projects\\mcp-servers\\${projectName} && npx ts-node src/server.ts`,
-                    ],
-                },
-            };
-        }
+        throw new Error("Unsupported platform");
     }
 }
