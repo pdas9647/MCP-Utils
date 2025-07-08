@@ -89,10 +89,9 @@ export function setEntry(projectName: string) {
         };
     }
 
-    // Use the calling project's root directory
     const projectPath = path.resolve(process.cwd(), projectName);
 
-    if (platform() === "darwin") {
+    if (platform() === "darwin" || platform() === "linux") {
         return {
             entry: {
                 command: "bash",
@@ -103,7 +102,10 @@ export function setEntry(projectName: string) {
         return {
             entry: {
                 command: "cmd",
-                args: ["/c", `cd /d "${projectPath}" && npx ts-node src/server.ts`],
+                args: [
+                    "/c",
+                    `cd /d ${projectPath} && npx ts-node src/server.ts`, // ⬅ no quotes
+                ],
             },
         };
     } else {
