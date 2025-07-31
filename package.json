@@ -1,26 +1,54 @@
 {
-    "name": "mcp-utils",
-    "version": "1.0.0",
-    "description": "",
-    "main": "dist/index.js",
-    "exports": {
-        "./utils": "./dist/utils/index.js"
-    },
-    "scripts": {
-        "dev": "ts-node src/server.ts",
-        "build": "tsc",
-        "prepare": "npm run build"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "crypto-js": "^4.2.0",
-        "mongodb": "^6.16.0"
-    },
-    "devDependencies": {
-        "@modelcontextprotocol/sdk": "^1.13.0",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.8.3"
-    }
+  "name": "mcp-utils",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "description": "Essential TypeScript utility library for Model Context Protocol (MCP) server development with Claude Desktop integration. Provides comprehensive tools for MongoDB connectivity, AES-256-GCM encryption, cross-platform Claude configuration management, port management, error handling, and console logging for building production-ready MCP server",
+  "keywords": [
+    "model-context-protocol",
+    "mcp-server",
+    "mcp-utilities",
+    "stdio-transport",
+    "ai-assistant",
+    "claude-ai",
+    "claude-llm",
+    "claude-config",
+    "claude-desktop",
+    "llm-backend",
+    "llm-integration",
+    "nodejs",
+    "typescript",
+    "typescript-utilities",
+    "mongodb",
+    "mongodb-utils",
+    "encryption-utils",
+    "aes-256-gcm",
+    "crypto-utils",
+    "port-management",
+    "cross-platform",
+    "server-utilities",
+    "development-tools",
+    "production-ready",
+    "error-handling",
+    "config-management",
+    "process-management"
+  ],
+  "exports": {
+    "./utils": "./dist/utils/index.js"
+  },
+  "scripts": {
+    "dev": "ts-node src/server.ts",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "mongodb": "^6.18.0"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
 }
