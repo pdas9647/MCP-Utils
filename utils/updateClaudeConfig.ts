@@ -1,10 +1,9 @@
-import { existsSync, readFileSync, writeFileSync } from "fs";
 import process from "process";
-import path, { join } from "path";
-import os, { platform } from "os";
-import { printInConsole } from "./printInConsole";
-import { sendError } from "./sendError";
-import { transport } from "../src/server";
+import os, {platform} from "os";
+import path, {join} from "path";
+import {existsSync, mkdirSync, readFileSync, writeFileSync} from "fs";
+import {transport} from "../src/server";
+import {printInConsole} from "./printInConsole";
 
 type MCPConfig = {
     mcpServers: Record<
@@ -47,9 +46,20 @@ function getClaudeConfigPath(): string {
 
 function loadConfig(path: string): MCPConfig {
     if (!existsSync(path)) {
-        sendError(transport, new Error(`File not found: ${path}`), "update-claude-config");
-        // TODO: Display warning
-        process.exit(1);
+        // Create default config structure
+        const defaultConfig: MCPConfig = {
+            mcpServers: {},
+        };
+
+        // Ensure directory exists
+        const dir = path.substring(0, path.lastIndexOf(path.includes('\\') ? '\\' : '/'));
+        if (!existsSync(dir)) {
+            mkdirSync(dir, {recursive: true});
+        }
+
+        // Create the config file
+        saveConfig(path, defaultConfig);
+        return defaultConfig;
     }
     const raw = readFileSync(path, "utf8");
     return JSON.parse(raw) as MCPConfig;
@@ -60,10 +70,7 @@ function saveConfig(path: string, cfg: MCPConfig) {
     writeFileSync(path, pretty, "utf8");
 }
 
-export async function addOrUpdateMCPServer(
-    name: string,
-    serverEntry: MCPConfig["mcpServers"][string]
-) {
+export async function addOrUpdateMCPServer(name: string, serverEntry: MCPConfig["mcpServers"][string]) {
     const configPath = getClaudeConfigPath();
     const config = loadConfig(configPath);
 

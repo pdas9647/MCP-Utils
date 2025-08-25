@@ -47,7 +47,7 @@
     "mongodb": "^6.18.0"
   },
   "devDependencies": {
-    "@modelcontextprotocol/sdk": "^1.17.0",
+    "@modelcontextprotocol/sdk": "^1.17.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
