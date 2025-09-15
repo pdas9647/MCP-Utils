@@ -194,7 +194,7 @@ mcp-utils/
 ├── src/
 │   └── server.ts           # Example server
 ├── utils/
-│   ├── index.ts           # Main exports
+│   ├── tool.ts           # Main exports
 │   ├── db.ts              # MongoDB utilities
 │   ├── encryption.ts      # Crypto utilities
 │   ├── updateClaudeConfig.ts # Claude config
