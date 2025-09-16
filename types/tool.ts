@@ -3,6 +3,30 @@ export interface ToolParameter {
     techDescription: string;
     userFriendlyDescription: string;
     optional: boolean;
+    parameters?: {
+        name: string;
+        techDescription: string;
+        userFriendlyDescription: string;
+        optional: boolean;
+        parameters?: {
+            name: string;
+            techDescription: string;
+            userFriendlyDescription: string;
+            optional: boolean;
+            parameters?: {
+                name: string;
+                techDescription: string;
+                userFriendlyDescription: string;
+                optional: boolean;
+                parameters?: {
+                    name: string;
+                    techDescription: string;
+                    userFriendlyDescription: string;
+                    optional: boolean;
+                }[];
+            }[];
+        }[];
+    }[];
 }
 
 export interface Tool {
